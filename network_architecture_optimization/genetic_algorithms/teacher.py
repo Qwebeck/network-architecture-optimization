@@ -19,8 +19,9 @@ class Teacher:
         ], dtype=int)
 
     def map_chromosome_to_network_architecture(self, chromosome: np.ndarray):
-        return self.architecture_mapper.map_chromosome(self._input_shape, chromosome)
-
+        data = { 'x_train': self.x_train, 'x_test': self.x_test, 'y_train': self.y_train,'y_test': self.y_test }
+        return self.architecture_mapper.map_chromosome(self._input_shape, chromosome, data)
+    
     def fitness_function(self, solution: np.ndarray, solution_idx: int):
         model = self.map_chromosome_to_network_architecture(solution)
         print(model.summary())
