@@ -7,6 +7,7 @@ setup(
         'numpy',
         'tensorflow',
         'pygad',
-        'scikit-learn'
+        'scikit-learn',
+        'pyray'
     ],
 )

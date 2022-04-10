@@ -4,6 +4,7 @@ from ray import tune
 from ray.tune.schedulers import AsyncHyperBandScheduler
 from ray.tune.integration.keras import TuneReportCallback
 
+
 class HyperparameterOptimizer:
     def __init__(self, inputs, outputs, data):
         self.inputs = inputs
@@ -17,15 +18,16 @@ class HyperparameterOptimizer:
         model.compile(optimizer=optimizer,
                       loss=loss_fn,
                       metrics=['accuracy'])
-        
+
         return model
 
     def train_model(self, config):
+        print('If printed it works')
         batch_size = 128
         epochs = 12
 
         model = self.build_model(config)
-        
+
         print(model.summary())
         print('===')
         print('===')
@@ -33,7 +35,7 @@ class HyperparameterOptimizer:
         print(self.data['y_train'])
         print(self.data['x_test'])
         print(self.data['y_test'])
-        
+
         model.fit(
             self.data['x_train'],
             self.data['y_train'],
@@ -45,7 +47,7 @@ class HyperparameterOptimizer:
                 'mean_accuracy': 'accuracy'
             })]
         )
-    
+
     def tune_mnist(self, num_training_iterations):
         sched = AsyncHyperBandScheduler(time_attr="training_iteration", max_t=400, grace_period=20)
 
@@ -71,8 +73,8 @@ class HyperparameterOptimizer:
         print("Best hyperparameters found were: ", analysis.best_config)
 
         return analysis.best_config
-    
+
     def get_model(self):
         config = self.tune_mnist(5)
-        
+
         return self.build_model(config)
