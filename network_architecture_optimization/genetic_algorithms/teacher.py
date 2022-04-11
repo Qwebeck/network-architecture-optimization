@@ -12,10 +12,11 @@ class Teacher:
 
     def create_initial_population(self) -> np.ndarray:
         return np.array([
-            [1, 0, 1, 0, 2, 0, 3, 1, 1, 2],
-            [3, 2, 1, 1, 1, 2, 1, 0, 2, 3],
-            [1, 3, 1, 1, 0, 3, 1, 1, 3, 4],
-            [1, 1, 3, 1, 1, 0, 3, 1, 1, 2]
+
+            [1, 0, 1, 0, 2, 0, 3, 1, 1, 2, 1, 1],
+            [3, 2, 1, 1, 1, 2, 1, 0, 2, 3, 2, 2],
+            [1, 3, 1, 1, 0, 3, 1, 1, 1, 2, 3, 3],
+            [1, 1, 3, 1, 1, 0, 3, 1, 0, 2, 4, 1]
         ], dtype=int)
 
     def map_chromosome_to_network_architecture(self, chromosome: np.ndarray):
