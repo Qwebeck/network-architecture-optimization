@@ -5,20 +5,11 @@ from network_architecture_optimization.mappers.network_builder import NetworkBui
 
 class Teacher:
 
-    def __init__(self, X: np.ndarray, y: np.ndarray, n_evaluations):
+    def __init__(self, X: np.ndarray, y: np.ndarray, n_evaluations, network_builder: NetworkBuilder):
         self._input_shape = X[0].shape
         self.x_train, self.x_test, self.y_train, self.y_test = train_test_split(X, y)
         self._n_evaluations = n_evaluations
-        self.network_builder = NetworkBuilder()
-
-    def create_initial_population(self) -> np.ndarray:
-        return np.array([
-
-            [1, 0, 1, 0, 2, 0, 3, 1, 1, 2, 1, 1],
-            [3, 2, 1, 1, 1, 2, 1, 0, 2, 3, 2, 2],
-            [1, 3, 1, 1, 0, 3, 1, 1, 1, 2, 3, 3],
-            [1, 1, 3, 1, 1, 0, 3, 1, 0, 2, 4, 1]
-        ], dtype=int)
+        self.network_builder = network_builder
 
     def map_chromosome_to_network_architecture(self, chromosome: np.ndarray):
         data = {'x_train': self.x_train, 'x_test': self.x_test, 'y_train': self.y_train, 'y_test': self.y_test}

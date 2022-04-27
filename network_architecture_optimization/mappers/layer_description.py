@@ -1,4 +1,5 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+import tensorflow as tf
 
 
 @dataclass
@@ -9,3 +10,5 @@ class LayerDescription:
     dropout_gene: int
     weight_initialization_gene: int
     normalization_gene: int
+
+

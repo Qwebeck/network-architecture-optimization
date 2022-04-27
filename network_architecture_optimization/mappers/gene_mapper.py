@@ -1,5 +1,5 @@
 from network_architecture_optimization.mappers.layer_description import LayerDescription
-from dataclasses import asdict
+from dataclasses import asdict, field
 from typing import Callable
 import tensorflow as tf
 
@@ -26,10 +26,10 @@ class GeneMapper:
 
     def get_gene_mapper(self, gene_name: str) -> Callable[[int], tf.keras.layers.Layer]:
         mappers = {
-            'weightInit_gene': self.map_weightInit_gene,
+            'weight_initialization_gene': self.map_weight_init_gene,
             'dense_layer_gene': self.map_dense_layer_gene,
             'activation_gene': self.map_activation_gene,
-            'dropoutRate_gene': self.map_dropoutRate_gene,
+            'dropout_rate_gene': self.map_dropout_rate_gene,
             'dropout_gene': self.map_dropout_gene,
             'normalization_gene': self.map_normalization_gene,
         }
@@ -37,7 +37,7 @@ class GeneMapper:
         assert gene_name in expected_gene_names, f"{gene_name} is an unkown gene. Genes that could be mapped are: f{expected_gene_names}"
         return mappers[gene_name]
 
-    def map_weightInit_gene(self, gene: int):
+    def map_weight_init_gene(self, gene: int):
 
         available_initializations = [
             tf.keras.initializers.GlorotUniform(seed=None),
@@ -68,7 +68,7 @@ class GeneMapper:
         ]
         return available_layers[gene % len(available_layers)]
 
-    def map_dropoutRate_gene(self, gene: int) -> tf.keras.layers.Layer:
+    def map_dropout_rate_gene(self, gene: int) -> tf.keras.layers.Layer:
 
         available_values = [0.1, 0.3, 0.5, 0.7]
         self.drop_rate = available_values[gene % len(available_values)]
