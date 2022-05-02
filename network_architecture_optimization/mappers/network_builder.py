@@ -1,3 +1,4 @@
+from functools import partial
 from network_architecture_optimization.mappers.gene_mapper import GeneMapper
 from network_architecture_optimization.mappers.layer_description import LayerDescription
 import tensorflow as tf
@@ -8,8 +9,9 @@ from dataclasses import fields
 
 
 class NetworkBuilder:
-    def __init__(self):
+    def __init__(self, verobse_level=1):
         self.mapper = GeneMapper()
+        self._verbose_level = verobse_level
 
     def map_chromosome(self, input_shape, chromosome: np.ndarray, data):
         inputs, outputs = self._build_layers(input_shape, chromosome)
@@ -33,4 +35,5 @@ class NetworkBuilder:
         model.compile(optimizer='adam',
                       loss=loss_fn,
                       metrics=['accuracy'])
+        model.fit = partial(model.fit, verbose=self._verbose_level)
         return model
